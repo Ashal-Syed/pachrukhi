@@ -54,13 +54,6 @@ const SearchBar = ({ setRootGeneration }: SearchBarProps) => {
           onChange={(e) => setQuery(e.target.value)}
           className="flex-1 px-4 py-2 focus:outline-none"
         />
-        <button
-          type="submit"
-          className="px-4 py-2 hover:bg-gray-100 transition"
-          aria-label="Search"
-        >
-          🔍
-        </button>
       </form>
 
       {showDropdown && results.length > 0 && (

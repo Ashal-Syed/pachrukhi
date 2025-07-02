@@ -1,29 +1,42 @@
 "use client";
 
 import { ButtonHTMLAttributes } from "react";
-import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 interface CustomButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   text: string;
   link?: string;
+  variant?: "default" | "red" | "white";
 }
 
-const Button = ({ link, text, className, ...rest }: CustomButtonProps) => {
-  const router = useRouter();
+const Button = ({
+  link,
+  text,
+  className,
+  variant = "default",
+  ...rest
+}: CustomButtonProps) => {
+  const baseClasses =
+    "flex items-center justify-center px-10 py-2 rounded-full hover:cursor-pointer transition";
+  const variantClasses =
+    variant === "red"
+      ? "bg-red-500/50 text-white hover:bg-red-600"
+      : variant === "white"
+      ? "bg-white text-black border hover:bg-white/80"
+      : "hover:bg-gray-100 hover:text-black border";
 
-  const handleClick = () => {
-    if (link) {
-      router.push(link);
-    }
-  };
+  const combinedClasses = `${baseClasses} ${variantClasses} ${className || ""}`;
+
+  if (link) {
+    return (
+      <Link href={link} className={combinedClasses}>
+        {text}
+      </Link>
+    );
+  }
+
   return (
-    <button
-      onClick={handleClick}
-      className={
-        "flex items-center justify-center px-4 py-2 border rounded hover:bg-gray-100 transition hover:cursor-pointer"
-      }
-      {...rest}
-    >
+    <button className={combinedClasses} {...rest}>
       {text}
     </button>
   );

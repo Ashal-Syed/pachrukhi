@@ -1,17 +1,16 @@
 "use client";
 
+import Image from "next/image";
+
 interface Person {
   id: string;
   name: string;
-  birthYear: number;
-  deathYear?: number;
-  occupation?: string;
-  avatar?: string;
   parents: string[];
   children: string[];
   partners?: string[];
+  gender?: string;
+  avatar?: string;
 }
-
 
 interface PersonCardProps {
   person: Person;
@@ -24,32 +23,29 @@ export default function PersonCard({
   isSelected,
   onClick,
 }: PersonCardProps) {
-  const initials = person.name
-    .split(" ")
-    .map((n) => n[0])
-    .join("");
+  const initials = person?.name
+    ? person.name
+        .split(" ")
+        .map((n) => n[0])
+        .join("")
+    : "?";
 
-    return (
+  return (
     <div
       onClick={onClick}
-      className={`w-36 h-36 flex flex-col items-center justify-center rounded-lg ${
-        isSelected ? "bg-white" : "bg-white/70"
+      className={`w-44 h-30 flex flex-col items-center justify-center rounded-lg ${
+        isSelected ? "bg-white/80" : "bg-white/40"
       } shadow hover:shadow-lg cursor-pointer p-2 text-center`}
     >
-      {person.avatar ? (
-        <img
-          src={person.avatar}
-          alt={person.name}
-          className="w-16 h-16 rounded-full object-cover mb-2"
-        />
-      ) : (
-        <div className="w-16 h-16 rounded-full bg-gray-200 flex items-center justify-center text-lg mb-2">
-          {initials}
-        </div>
-      )}
+      <Image src="/person.svg" alt="icon" height={70} width={70} />
 
-      <div className="text-black font-medium">{person.name}</div>
-
+      <div
+        className={`h-15 font-medium text-sm ${
+          isSelected ? "text-black" : "text-white"
+        }`}
+      >
+        {person?.name || "Unnamed"}
+      </div>
     </div>
   );
 }

@@ -1,10 +1,10 @@
 import React from 'react'
 import SignIn from '../../components/signin/signin'
 
-const index = () => {
+const login = () => {
   return (
     <SignIn />
   )
 }
 
-export default index
+export default login
